@@ -8,8 +8,8 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.memory import MemoryStorage
 
-TOKEN = "85293055:AAjk-3n7VkklDliXrd63_RTdm5zvD8SxUvP"
-ADMIN_ID = 56222156 # 👈 admin Telegram ID
+TOKEN = os.getenv("TOKEN")
+ADMIN_ID = int(os.getenv("ADMIN_ID"))
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher(storage=MemoryStorage())
