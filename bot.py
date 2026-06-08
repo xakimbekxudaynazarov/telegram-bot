@@ -594,13 +594,23 @@ async def error_handler(event):
     return True
 
 # ==================== MAIN ====================
+async def healthcheck(request):
+    return web.Response(text="ONLINE XIZMAT BOT ishlayapti!")
+
 async def main():
     logger.info("Bot ishga tushdi...")
+
+    app = web.Application()
+    app.router.add_get("/", healthcheck)
+
+    runner = web.AppRunner(app)
+    await runner.setup()
+
+    port = int(os.getenv("PORT", 10000))
+    site = web.TCPSite(runner, "0.0.0.0", port)
+
+    await site.start()
+
+    logger.info(f"Web server ishga tushdi. Port: {port}")
+
     await dp.start_polling(bot)
-
-
-if __name__ == "__main__":
-    try:
-        asyncio.run(main())
-    except (KeyboardInterrupt, SystemExit):
-        logger.info("Bot to'xtatildi.")
